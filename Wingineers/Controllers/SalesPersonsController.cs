@@ -95,12 +95,6 @@ namespace Wingineers.Controllers
             return View(model);
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
         private async Task<SalesPersonsViewModel> GetSalesPersonsAsync(CancellationToken cancellationToken)
         {
             SalesPersonsViewModel model = new();
@@ -149,13 +143,19 @@ namespace Wingineers.Controllers
                         .ToList();
                 }
             }
-            catch (Exception ex)
+            catch (HttpRequestException ex)
             {
                 logger.LogError(ex, "Wingineers API call failed");
                 model.Error = "Orders couldn't be loaded right now. Please try again later.";
             }
 
             return model;
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }
