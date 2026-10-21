@@ -7,4 +7,5 @@ public sealed class WingineersOptions
 
     [Required, Url] public required string BaseUrl { get; init; }
     [Required] public required string ApiKey { get; init; }
+    public TimeSpan CacheDuration { get; init; } = TimeSpan.FromMinutes(5);
 }

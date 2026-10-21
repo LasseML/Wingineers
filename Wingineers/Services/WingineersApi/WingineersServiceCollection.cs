@@ -7,6 +7,8 @@ namespace Wingineers.Services.WingineersApi
     {
         public static IServiceCollection AddWingineersClient(this IServiceCollection services)
         {
+            services.AddMemoryCache();
+
             services.AddOptions<WingineersOptions>()
                 .BindConfiguration(WingineersOptions.SectionName)
                 .ValidateDataAnnotations()
@@ -15,7 +17,7 @@ namespace Wingineers.Services.WingineersApi
             services.AddHttpClient<WingineersApiService>((serviceProvider, client) =>
             {
                 var settings = serviceProvider
-                    .GetRequiredService<IOptions<WingineersOptions>>().Value;
+                    .GetRequiredService<IOptionsMonitor<WingineersOptions>>().CurrentValue;
 
                 client.DefaultRequestHeaders.Add("ApiKey", settings.ApiKey);
                 client.DefaultRequestHeaders.Accept.Add(
