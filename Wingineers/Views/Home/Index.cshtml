@@ -1,0 +1,28 @@
+﻿@model SalesPersonsViewModel
+@{
+    ViewData["Title"] = "Salespeople";
+}
+
+<h1>Salespeople</h1>
+
+@if (Model.Error is not null)
+{
+    <p>@Model.Error</p>
+}
+else if (Model.SalesPersons.Count == 0)
+{
+    <p>No salespeople found.</p>
+}
+else
+{
+    <ul>
+        @foreach (var salesPerson in Model.SalesPersons)
+        {
+            var count = salesPerson.SalesPersonOrderLines.Count;
+            <li>
+                <a asp-action="Details" asp-route-id="@salesPerson.Id">@salesPerson.Name</a>
+                - @count @(count == 1 ? "order" : "orders")
+            </li>
+        }
+    </ul>
+}

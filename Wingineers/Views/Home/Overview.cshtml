@@ -1,0 +1,33 @@
+﻿@model OverviewViewModel
+@{
+    ViewData["Title"] = "Order volume per month";
+}
+
+<p><a asp-controller="SalesPersons" asp-action="Index">Back to salespeople</a></p>
+
+<h1>Order volume per month</h1>
+
+@if (Model.Error is not null)
+{
+    <p>@Model.Error</p>
+}
+else if (Model.Months.Count == 0)
+{
+    <p>No orders with a readable date.</p>
+}
+else
+{
+    <ul>
+        @foreach (var month in Model.Months)
+        {
+            <li>@month.Month.ToString("MMMM yyyy"): @month.OrderCount @(month.OrderCount == 1 ? "order" : "orders")</li>
+        }
+    </ul>
+
+    <p>Total: @Model.TotalOrders orders</p>
+
+    @if (Model.UnreadableDateCount > 0)
+    {
+        <p>@Model.UnreadableDateCount orders had no readable date and are not counted above.</p>
+    }
+}

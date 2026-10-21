@@ -1,0 +1,40 @@
+﻿@model SalesPersonDetailsViewModel
+@{
+    ViewData["Title"] = Model.SalesPerson?.Name ?? "Salesperson";
+}
+
+<p><a asp-action="Index">Back to salespeople</a></p>
+
+@if (Model.Error is not null)
+{
+    <p>@Model.Error</p>
+}
+else
+{
+    var salesPerson = Model.SalesPerson!;
+
+    <h1>@salesPerson.Name</h1>
+
+    <ul>
+        <li>Id: @salesPerson.Id</li>
+        <li>Hire date: @salesPerson.HireDate</li>
+        <li>Address: @salesPerson.Address</li>
+        <li>City: @salesPerson.ZipCode @salesPerson.City</li>
+    </ul>
+
+    <h2>Orders (@salesPerson.SalesPersonOrderLines.Count)</h2>
+
+    @if (salesPerson.SalesPersonOrderLines.Count == 0)
+    {
+        <p>No orders.</p>
+    }
+    else
+    {
+        <ul>
+            @foreach (var order in salesPerson.SalesPersonOrderLines)
+            {
+                <li>@order.OrderDate - @order.OrderName - @order.OrderPrice.ToString("N2")</li>
+            }
+        </ul>
+    }
+}
