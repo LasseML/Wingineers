@@ -17,7 +17,7 @@ else
 
     <ul>
         <li>Id: @salesPerson.Id</li>
-        <li>Hire date: @salesPerson.HireDate</li>
+        <li>Hire date: @(salesPerson.HireDate?.ToString("yyyy-MM-dd") ?? "Unknown")</li>        
         <li>Address: @salesPerson.Address</li>
         <li>City: @salesPerson.ZipCode @salesPerson.City</li>
     </ul>
@@ -33,7 +33,7 @@ else
         <ul>
             @foreach (var order in salesPerson.SalesPersonOrderLines)
             {
-                <li>@order.OrderDate - @order.OrderName - @order.OrderPrice.ToString("N2")</li>
+                <li>@(order.OrderDate?.ToString("yyyy-MM-dd HH:mm") ?? "Unknown date") - @order.OrderName - @order.OrderPrice.ToString("N2")</li>            
             }
         </ul>
     }

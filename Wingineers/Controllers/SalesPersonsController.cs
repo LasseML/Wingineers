@@ -64,7 +64,7 @@ namespace Wingineers.Controllers
                         {
                             Id = x.Id,
                             Name = x.Name ?? "",
-                            HireDate = x.HireDate ?? "",
+                            HireDate = WingineersDateParser.Parse(x.HireDate),
                             Address = x.Address ?? "",
                             City = x.City ?? "",
                             ZipCode = x.ZipCode ?? "",
@@ -74,8 +74,10 @@ namespace Wingineers.Controllers
                                     Id = o.Id,
                                     OrderName = o.OrderName ?? "",
                                     OrderPrice = o.OrderPrice,
-                                    OrderDate = o.OrderDate ?? ""
+                                    OrderDate = WingineersDateParser.Parse(o.OrderDate)
                                 })
+                                .OrderBy(o => o.OrderDate is null)
+                                .ThenBy(o => o.OrderDate)
                                 .ToList()
                         })
                         .ToList();

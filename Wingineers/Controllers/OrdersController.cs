@@ -29,7 +29,7 @@ namespace Wingineers.Controllers
                 var orderMonths = new List<DateOnly>();
                 foreach (OrderLineDto line in orderLines)
                 {
-                    if (DateTime.TryParse(line.OrderDate, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime date))
+                    if (WingineersDateParser.Parse(line.OrderDate) is DateTime date)
                     {
                         orderMonths.Add(new DateOnly(date.Year, date.Month, 1));
                     }
